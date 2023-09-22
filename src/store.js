@@ -1,15 +1,21 @@
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 // You should not be using the redux core package by itself today, except for learning purposes.
 // We recommend using the configureStore method of the @reduxjs/toolkit package, which replaces createStore.
 // Just for learning Purpose first I will go for redux then reduxjs/toolkit.
 
-const initialState = {
+const initialStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
 };
 
-function reducer(state = initialState, action) {
+const initialStateCustomer = {
+   fullName: "",
+   nationalID: "",
+   createdAt: ""
+}
+
+function AccountReducer(state = initialStateAccount, action) {
   switch (action.type) {
     case "account/deposit":
       return { ...state, balance: state.balance + action.payload };
@@ -39,25 +45,84 @@ function reducer(state = initialState, action) {
   }
 }
 
-const store = createStore(reducer);
+function CustomerReducer(state = initialStateCustomer, action){
+  switch(action.type){
+    case "customer/createCustomer":
+    return {...state, payload: {
+        fullName: action.payload.fullName,
+        nationalID: action.payload.nationalID,
+        createdAt: action.payload.createdAt
+    }}
 
-store.dispatch({ type: "account/deposit", payload: 500000 });
+    case "customer/updateCustomer":
+        return{...state, payload: {
+            fullName: action.payload.fullName
+        }
+        
+        }
 
+    default:
+     return state;
+  }
+}
+
+const rootReducer =  combineReducers({
+    account: AccountReducer,
+    customer: CustomerReducer
+})
+
+const store = createStore(rootReducer);
+
+// Create Action Creater
+
+function deposit(amount){
+ return ({ type: "account/deposit", payload: amount });
+}
+
+function withdraw(amount){
+    return ({ type: "account/withdraw", payload: amount });
+}
+
+function requestLoan(amount, purpose){
+    return ({
+        type: "account/requestLoan",
+        payload: {
+          amount,
+          purpose,
+        },
+      });
+}
+
+function payLoan(){
+    return ({type: "account/payLoan"})
+}
+
+store.dispatch(deposit(900));
 console.log("Deposit: ", store.getState());
-
-store.dispatch({ type: "account/withdraw", payload: 1000 });
+store.dispatch(withdraw(300));
 console.log("Withdrawl: ", store.getState());
-
-store.dispatch({
-  type: "account/requestLoan",
-  payload: {
-    amount: 20000,
-    purpose: "Car Loan",
-  },
-});
-
+store.dispatch(requestLoan(500, "Bike Loan"));
 console.log("Request Loan: ", store.getState());
-
-store.dispatch({type: "account/payLoan"})
-
+store.dispatch(payLoan());
 console.log("payLoan: ", store.getState());
+
+
+function createCustomer(fullName, nationalID){
+    return {
+        type: "customer/createCustomer",
+        payload: {fullName, nationalID, createdAt: new Date().toISOString()}
+    }
+}
+
+function updateCustomer(fullName){
+  return {
+    type: "customer/updateCustomer",
+    payload: {fullName}
+  }
+}
+
+store.dispatch(createCustomer("Aj", 101));
+console.log(store.getState());
+
+store.dispatch(updateCustomer("Vivek Roy!"));
+console.log("updated: ", store.getState());
