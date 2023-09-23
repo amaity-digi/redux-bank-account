@@ -11,7 +11,7 @@ function Customer() {
  
   return (
     <div>
-      <h2>🫲Welcome,{customer?.payload?.fullName}</h2>
+      <h2>🫲Welcome {customer?.fullName}</h2>
     </div>
   )
 }

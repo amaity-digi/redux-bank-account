@@ -6,9 +6,8 @@ import CreateCustomer from "./features/customers/CreateCustomer";
 import Customer from "./features/customers/Customer";
 
 function App() {
-  const fullName = useSelector((store) => store.customer.payload?.fullName);
-  console.log("cus", fullName);
-
+  const fullName = useSelector((store) => store.customer.fullName);
+  console.log("full", fullName);
   return (
     <div className="App">
       <h2>💵🤑 The Redux-Redux Bank 💴💵</h2>
