@@ -7,7 +7,10 @@ const initialStateCustomer = {
   createdAt: "",
 };
 
-// reducer
+//Reducer:
+// Reducers are functions that specify how the state of your application changes in response to actions.
+// They take the current state and the action as arguments and return a new state.
+
 export default function CustomerReducer(state = initialStateCustomer, action) {
   switch (action.type) {
     case "customer/createCustomer":
@@ -32,7 +35,10 @@ export default function CustomerReducer(state = initialStateCustomer, action) {
   }
 }
 
-//Action Creater
+//Action Creater:
+//First, you create an action, which is a plain JavaScript object with a type property
+// that describes the action and an optional payload property that carries data. 
+
 export function createCustomer(fullName, nationalID) {
   return {
     type: "customer/createCustomer",
@@ -46,6 +52,9 @@ export function updateCustomer(fullName) {
     payload: { fullName },
   };
 }
+
+// Dispatching Actions:
+// Once you have an action, you dispatch it using the dispatch method provided by the Redux store.
 
 // store.dispatch(createCustomer("Aj", 101));
 // console.log(store.getState());

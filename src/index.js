@@ -4,14 +4,13 @@ import './index.css';
 import App from './App';
 
 import store from './store';
-store.dispatch({type: "account/deposit", payload: 300});
-console.log("first", store.getState());
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    <Provider store={store}>
     <App />
-  </React.StrictMode>
+    </Provider>
 );
 
 
