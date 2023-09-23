@@ -6,8 +6,12 @@
 //Basically Thunk allows to wait before dispatching the fetch data into the store.
 
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 function BalanceDisplay() {
+  const account = useSelector((store) => store.account);
+  console.log("balance", account?.balance);
+
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("en", {
       style: "currency",
@@ -17,7 +21,7 @@ function BalanceDisplay() {
 
   return (
     <div className='balance'>
-      {formatCurrency(1)}
+      {formatCurrency(account?.balance)}
     </div>
   )
 }
