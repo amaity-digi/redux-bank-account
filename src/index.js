@@ -13,4 +13,9 @@ root.render(
     </Provider>
 );
 
-
+// Redux Toolkit: is allow us to write lot less code to achieve the exact same result as before.
+// So we say that we need a lot less boiler plate code.
+// 3 best advantages:
+// a. We can write code that mutates state inside reducers.
+// b. Action Creators are automatically created
+// c. Automatically setup of thunk middleware and devTools.
