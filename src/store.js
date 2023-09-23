@@ -1,4 +1,5 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import thunk from "redux-thunk";
 import AccountReducer from "./features/accounts/AccountSlice";
 import CustomerReducer from "./features/customers/CustomerSlice";
 // You should not be using the redux core package by itself today, except for learning purposes.
@@ -17,7 +18,8 @@ const rootReducer =  combineReducers({
     customer: CustomerReducer
 })
 
-const store = createStore(rootReducer);
+// applyMiddleware: Basically we told to Redux , our store that want to use the thunk middleware in our applications.
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
 
